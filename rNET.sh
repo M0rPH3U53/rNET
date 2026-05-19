@@ -38,7 +38,7 @@ read network
 # Découverte réseau
 echo " "
 echo -ne "🔍 ${BLANC}Scan ARP...${RESET}"
-hotes=$(netdiscover -r ${network} -P | grep -E '[0-9]+\.' | awk '{print $1}')
+hotes=$(netdiscover -r ${network} -P -f | grep -E '[0-9]+\.' | awk '{print $1}')
 echo -e "${JAUNE}100%${RESET}"
 
 # Verifie si la variable est vide
