@@ -52,7 +52,7 @@ echo " "
 echo -ne "${VERT}[+]${RESET} ${BLANC}Hotes${RESET}"
 echo " "
 echo " "
-for hote in ${hotes}; do
+for hote in "${hotes}"; do
      echo "${hote}"
 done
 
