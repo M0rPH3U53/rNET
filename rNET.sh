@@ -41,6 +41,12 @@ echo -ne "🔍 ${BLANC}Scan ARP...${RESET}"
 hotes=$(netdiscover -r ${network} -P | grep -E '[0-9]+\.' | awk '{print $1}')
 echo -e "${JAUNE}100%${RESET}"
 
+# Verifie si la variable est vide
+if [ -z "${hotes}" ]; then
+    echo "❌ Aucun hote"
+    exit 1
+fi
+
 # Recupere les IPs
 echo " "
 echo -ne "${VERT}[+]${RESET} ${BLANC}Hotes${RESET}"
@@ -56,8 +62,4 @@ nb=$(echo "${hotes}" | wc -l)
 echo -ne "${VERT}[+]${RESET} ${BLANC}Total:${RESET} ${nb}"
 echo " "
 
-# Verifie si la variable est vide
-if [ -z "${hotes}" ]; then
-    echo "❌ Aucun hote"
-    exit 1
-fi
+
