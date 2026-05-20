@@ -38,7 +38,7 @@ read network
 # Découverte réseau
 echo " "
 echo -ne "🔍 ${BLANC}Scan ARP...${RESET}"
-hotes=$(netdiscover -r 192.168.56.1/24 -P -f | grep -E '[0-9]+\.' | awk '{print "✅ " $1 " --> " $2}')
+hotes=$(netdiscover -r ${network} -P -f -N | grep -E '[0-9]+:' | awk '{printf "│ %-14s │ %-17s │ %-28s │\n", $1, $2, $5 " " $6 " " $7}')
 echo -e "${JAUNE}100%${RESET}"
 
 # Verifie si la variable est vide
@@ -47,19 +47,19 @@ if [ -z "${hotes}" ]; then
     exit 1
 fi
 
-# Recupere les IPs
-echo " "
-echo -ne "${VERT}[+]${RESET} ${BLANC}Hotes${RESET}"
-echo " "
-echo " "
+# Recupere les IP, MAC & le vendor name
+printf "┌────────────────┬───────────────────┬──────────────────────────────┐\n"
+printf "│       🖥️       │         ⚙️        │              🏭              │\n"
+printf "├────────────────┼───────────────────┼──────────────────────────────┤\n"
+
 for hote in "${hotes}"; do
      echo "${hote}"
 done
+
+printf "└────────────────┴───────────────────┴──────────────────────────────┘\n"
 
 # Compte le nombre d'IP
 echo " "
 nb=$(echo "${hotes}" | wc -l)
 echo -ne "${VERT}[+]${RESET} ${BLANC}Total:${RESET} ${nb}"
 echo " "
-
-
