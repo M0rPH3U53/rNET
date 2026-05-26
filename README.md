@@ -15,7 +15,7 @@ Recherche d’hôtes disponible sur le réseau
 
 ```
 ┌─[m0rph3u5@parrot]─[~/Scripts]
-└──╼ $./rMAP.sh
+└──╼ $./rNET.sh
                                                
 ░       ░░░   ░░░  ░░        ░░        ░
 ▒  ▒▒▒▒  ▒▒    ▒▒  ▒▒  ▒▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒
