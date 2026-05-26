@@ -9,7 +9,7 @@ Recherche d’hôtes disponible sur le réseau
 
 ```
 ┌─[m0rph3u5@parrot]─[~]  
-└──╼ $sudo apt install netdiscover fonts-noto-color-emoji
+└──╼ $sudo apt install nmap fonts-noto-color-emoji
 ```
 ## 👁️ Demo
 
