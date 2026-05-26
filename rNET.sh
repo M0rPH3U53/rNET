@@ -7,7 +7,8 @@ cat <<"EOF"
 ▒  ▒▒▒▒  ▒▒    ▒▒  ▒▒  ▒▒▒▒▒▒▒▒▒▒▒  ▒▒▒▒
 ▓       ▓▓▓  ▓  ▓  ▓▓      ▓▓▓▓▓▓▓  ▓▓▓▓
 █  ███  ███  ██    ██  ███████████  ████
-█  ████  ██  ███   ██        █████  ████                                                
+█  ████  ██  ███   ██        █████  ████
+                                                   
                                                 
 by M0rPH3U53
 
@@ -22,7 +23,7 @@ RESET='\033[0m'
 BLANC='\033[1;37m'
 JAUNE='\033[0;33m'
 
-# Adresse réseau + CIDR
+# Recupere adresse réseau + CIDR
 IP=$(ip route | grep -E '^[0-9]' | awk '{print $1}')
 
 echo " "
@@ -36,9 +37,8 @@ echo -ne "${BLEU}[i]${RESET} ${BLANC}Network:${RESET} "
 read network
 
 # Découverte réseau
-echo " "
 echo -ne "🔍 ${BLANC}Scan ARP...${RESET}"
-hotes=$(netdiscover -r ${network} -P -f -N | grep -E '[0-9]+:' | awk '{printf "│ %-14s │ %-17s │ %-28s │\n", $1, $2, $5 " " $6 " " $7}')
+hotes=$(nmap -sn ${network} -oG - | grep -E '[0-9]+\.' | grep -v Nmap | sed -E 's/[()]//g' | awk '{printf "│ %-14s │ %-28s │\n", $2, $3'})
 echo -e "${JAUNE}100%${RESET}"
 
 # Verifie si la variable est vide
@@ -47,16 +47,21 @@ if [ -z "${hotes}" ]; then
     exit 1
 fi
 
-# Recupere les IP, MAC & le vendor name
-printf "┌────────────────┬───────────────────┬──────────────────────────────┐\n"
-printf "│       🖥️       │         ⚙️        │              🏭              │\n"
-printf "├────────────────┼───────────────────┼──────────────────────────────┤\n"
+# Recupere les IPs
+echo " "
+echo -ne "${VERT}[+]${RESET} ${BLANC}Hotes${RESET}"
+echo " "
+echo " "
+
+printf "┌────────────────┬──────────────────────────────┐\n"
+printf "│       📍       │             🕵️                │\n"
+printf "├────────────────┼──────────────────────────────┤\n"
 
 for hote in "${hotes}"; do
      echo "${hote}"
 done
 
-printf "└────────────────┴───────────────────┴──────────────────────────────┘\n"
+printf "└────────────────┴──────────────────────────────┘\n"
 
 # Compte le nombre d'IP
 echo " "
