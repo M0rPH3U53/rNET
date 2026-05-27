@@ -37,8 +37,7 @@ echo -ne "${BLEU}[i]${RESET} ${BLANC}Network:${RESET} "
 read network
 
 # Découverte réseau
-echo -ne "🔍 ${BLANC}Scan ARP...${RESET}"
-hotes=$(nmap -sn ${network} -oG - | grep -E '[0-9]+\.' | grep -v Nmap | sed -E 's/[()]//g' | awk '{printf "│ %-14s │ %-28s │\n", $2, $3'})
+hotes=$(netdiscover -r ${network} -P -f -N | grep -E '[0-9]+:' | awk '{printf "│ %-14s │ %-17s │ %-28s │\n", $1, $2, $5 " " $6 " " $7}')
 echo -e "${JAUNE}100%${RESET}"
 
 # Verifie si la variable est vide
@@ -53,15 +52,15 @@ echo -ne "${VERT}[+]${RESET} ${BLANC}Hotes${RESET}"
 echo " "
 echo " "
 
-printf "┌────────────────┬──────────────────────────────┐\n"
-printf "│       📍       │             🕵️                │\n"
-printf "├────────────────┼──────────────────────────────┤\n"
+printf "┌────────────────┬───────────────────┬──────────────────────────────┐\n"
+printf "│       📍       │         🕵️        │              🏭              │\n"
+printf "├────────────────┼───────────────────┼──────────────────────────────┤\n"
 
 for hote in "${hotes}"; do
      echo "${hote}"
 done
 
-printf "└────────────────┴──────────────────────────────┘\n"
+printf "└────────────────┴───────────────────┴──────────────────────────────┘\n"
 
 # Compte le nombre d'IP
 echo " "
